@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Productos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <!-- Botones de navegación -->
+    <div class="my-3">
+        <a href="index.html" class="btn btn-secondary">Volver a la página principal</a>
+        <a href="ad.html" class="btn btn-secondary">Productos</a>
+        <a href="usuarios.html" class="btn btn-secondary">Usuarios</a>
+    </div>
+    <h2>Administración de Productos</h2>
+    <!-- Formulario para agregar productos -->
+    <form id="productoForm">
+        <div class="form-group">
+            <label for="nombre">Nombre del producto</label>
+            <input type="text" class="form-control" id="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="precio">Precio</label>
+            <input type="number" class="form-control" id="precio" required>
+        </div>
+        <div class="form-group">
+            <label for="imagen">URL de la Imagen</label>
+            <input type="text" class="form-control" id="imagen" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input type="text" class="form-control" id="descripcion" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar producto</button>
+    </form>
+    <hr>
+    <!-- Lista de productos -->
+    <div id="productosLista" class="row"></div>
+</div>
+
+<!-- Modal para modificar producto -->
+<div class="modal fade" id="modificarProductoModal" tabindex="-1" role="dialog" aria-labelledby="modificarProductoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modificarProductoModalLabel">Modificar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modificarProductoForm">
+                    <div class="form-group">
+                        <label for="modalNombre">Nombre del producto</label>
+                        <input type="text" class="form-control" id="modalNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalPrecio">Precio</label>
+                        <input type="number" class="form-control" id="modalPrecio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalImagen">URL de la Imagen</label>
+                        <input type="text" class="form-control" id="modalImagen" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modalDescripcion">Descripción</label>
+                        <input type="text" class="form-control" id="modalDescripcion" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar producto</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const productosLista = document.getElementById('productosLista');
+        const productoForm = document.getElementById('productoForm');
+        const modificarProductoModal = new bootstrap.Modal(document.getElementById('modificarProductoModal'));
+        let productoIdActual;
+
+        // Cargar productos al inicio
+        obtenerProductos();
+
+        // Evento para agregar producto
+        productoForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const precio = document.getElementById('precio').value;
+            const imagen = document.getElementById('imagen').value;
+            const descripcion = document.getElementById('descripcion').value;
+            agregarProducto({ nombre, precio, imagen, descripcion });
+        });
+
+        // Evento para modificar producto
+        document.getElementById('modificarProductoForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const nombre = document.getElementById('modalNombre').value;
+            const precio = document.getElementById('modalPrecio').value;
+            const imagen = document.getElementById('modalImagen').value;
+            const descripcion = document.getElementById('modalDescripcion').value;
+            modificarProducto({ nombre, precio, imagen, descripcion });
+        });
+
+        function obtenerProductos() {
+            fetch('/productos')
+                .then(response => response.json())
+                .then(datos => {
+                    productosLista.innerHTML = '';
+                    datos.forEach(producto => {
+                        const productoDiv = document.createElement('div');
+                        productoDiv.classList.add('col-md-4');
+                        productoDiv.innerHTML = `
+                            <div class="card">
+                                <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${producto.nombre}</h5>
+                                    <p class="card-text">${producto.descripcion}</p>
+                                    <p class="card-text">$${producto.precio}</p>
+                                    <button class="btn btn-danger" onclick="eliminarProducto(${producto.id})">Eliminar</button>
+                                    <button class="btn btn-warning" onclick="mostrarModificarModal(${producto.id}, '${producto.nombre}', ${producto.precio}, '${producto.imagen}', '${producto.descripcion}')">Modificar</button>
+                                </div>
+                            </div>
+                        `;
+                        productosLista.appendChild(productoDiv);
+                    });
+                });
+        }
+
+        function agregarProducto(producto) {
+            fetch('/productos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(producto)
+            })
+            .then(response => response.json())
+            .then(() => {
+                alert('Producto agregado exitosamente');
+                obtenerProductos();
+            });
+        }
+
+        function eliminarProducto(id) {
+            fetch(`/productos/${id}`, { method: 'DELETE' })
+            .then(response => {
+                if (!response.ok) { throw new Error('Error al eliminar el producto'); }
+                return response.json();
+            })
+            .then(() => {
+                alert('Producto eliminado exitosamente');
+                obtenerProductos();
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la operación de eliminación:', error);
+            });
+        }
+
+        function mostrarModificarModal(id, nombre, precio, imagen, descripcion) {
+            productoIdActual = id;
+            document.getElementById('modalNombre').value = nombre;
+            document.getElementById('modalPrecio').value = precio;
+            document.getElementById('modalImagen').value = imagen;
+            document.getElementById('modalDescripcion').value = descripcion;
+            modificarProductoModal.show();
+        }
+
+        function modificarProducto(producto) {
+            fetch(`/productos/${productoIdActual}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(producto)
+            })
+            .then(response => {
+                if (!response.ok) { throw new Error('Error al modificar el producto'); }
+                return response.json();
+            })
+            .then(() => {
+                alert('Producto modificado exitosamente');
+                obtenerProductos();
+                modificarProductoModal.hide();
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la operación de modificación:', error);
+            });
+        }
+
+        // Definir mostrarModificarModal y eliminarProducto correctamente
+        window.mostrarModificarModal = mostrarModificarModal;
+        window.eliminarProducto = eliminarProducto;
+    });
+</script>
+</body>
+</html>
