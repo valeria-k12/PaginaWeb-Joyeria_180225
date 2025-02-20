@@ -25,25 +25,73 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// ============================
-// Rutas para productos (sin cambios)
-// ============================
-
+// Obtener todos los productos
 app.get('/productos', (req, res) => {
   const query = 'SELECT * FROM productos';
   db.query(query, (err, results) => {
-    if (err) {
-      res.status(500).send('Error al obtener los productos');
-      return;
-    }
-    res.json(results);
+      if (err) {
+          console.error('Error al obtener los productos:', err);
+          res.status(500).send('Error al obtener los productos');
+          return;
+      }
+      res.json(results);
   });
 });
 
-// Rutas POST, DELETE y PUT para productos se mantienen igual...
-// (Código omitido para mantener el ejemplo enfocado en usuarios)
+// Agregar un producto
+app.post('/productos', (req, res) => {
+  console.log('Datos recibidos para agregar producto:', req.body);
+  const { nombre, precio, imagen, descripcion } = req.body;
+  const query = 'INSERT INTO productos (nombre, precio, imagen, descripcion) VALUES (?, ?, ?, ?)';
+  db.query(query, [nombre, precio, imagen, descripcion], (err, results) => {
+      if (err) {
+          console.error('Error al agregar producto:', err);
+          res.status(500).send('Error al agregar el producto');
+          return;
+      }
+      console.log('Producto agregado exitosamente:', results);
+      res.status(201).json({ mensaje: 'Producto agregado exitosamente' });
+  });
+});
 
+// Actualizar un producto
+app.put('/productos/:id', (req, res) => {
+  const { id } = req.params;
+  const { nombre, precio, imagen, descripcion } = req.body;
+  const query = 'UPDATE productos SET nombre = ?, precio = ?, imagen = ?, descripcion = ? WHERE id = ?';
+  db.query(query, [nombre, precio, imagen, descripcion, id], (err, results) => {
+      if (err) {
+          console.error('Error al actualizar producto:', err);
+          res.status(500).send('Error al actualizar el producto');
+          return;
+      }
+      if (results.affectedRows === 0) {
+          res.status(404).send('Producto no encontrado');
+      } else {
+          console.log('Producto actualizado exitosamente:', results);
+          res.status(200).json({ mensaje: 'Producto actualizado exitosamente' });
+      }
+  });
+});
+
+// Eliminar un producto
+app.delete('/productos/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM productos WHERE id = ?';
+  db.query(query, [id], (err, results) => {
+      if (err) {
+          console.error('Error al eliminar producto:', err);
+          res.status(500).send('Error al eliminar el producto');
+          return;
+      }
+      if (results.affectedRows === 0) {
+          res.status(404).send('Producto no encontrado');
+      } else {
+          console.log('Producto eliminado exitosamente:', results);
+          res.status(200).json({ mensaje: 'Producto eliminado exitosamente' });
+      }
+  });
+});
 // ============================
 // Rutas para usuarios
 // ============================
