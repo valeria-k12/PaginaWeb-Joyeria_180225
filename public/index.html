@@ -4,478 +4,370 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda Online</title>
-    <link rel="stylesheet" href="estilos.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/306/306776.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    #adminPanelLink { display: none; }
+  </style>
 </head>
 <body>
-
-  
-
-  <script src="componentejs/CargarProductos.js" defer></script>
-  
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-
-    <button class="nav-link btn btn-warning position-relative ms-3" data-bs-toggle="modal" data-bs-target="#carritoModal">
-      <i class="fas fa-shopping-cart"></i> Carrito
-      <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="carritoCantidad">0</span>
-    </button>
-
-    <div class="d-flex ms-3">
-      <button class="btn btn-link text-white" data-bs-toggle="modal" data-bs-target="#authModal">
-        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <!-- Botón del carrito (oculto hasta iniciar sesión) -->
+      <button id="carritoBtn" class="nav-link btn btn-warning position-relative d-none" data-bs-toggle="modal" data-bs-target="#carritoModal">
+        <i class="fas fa-shopping-cart"></i> Carrito
+        <span class="badge bg-danger position-absolute top-0 start-100 translate-middle" id="carritoCantidad">0</span>
       </button>
-    </div>
 
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="#inicio">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="#nosotros">Nosotros</a></li>       
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="#productos">Productos</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="#redes-sociales">Redes Sociales</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="#contacto">Contáctanos</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="#ubicacion">Ubicación</a></li>
-        <li class="nav-item"><a class="nav-link btn btn-primary" href="ad.html">Panel de administración</a></li>
-       
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<script>
-  
-  const navbarLinks = document.querySelectorAll('.navbar-nav .nav-link');
-  navbarLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      const navbarCollapse = document.getElementById('navbarNav');
-      const bootstrapCollapse = new bootstrap.Collapse(navbarCollapse, {
-        toggle: false
-      });
-      bootstrapCollapse.hide(); 
-    });
-  });
-</script>
-
-
- 
-<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="authModalLabel">Iniciar sesión o Registrarse</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <!-- Botón de inicio de sesión / perfil -->
+      <div id="loginBtn" class="ms-2">
+        <button class="btn btn-link text-white" data-bs-toggle="modal" data-bs-target="#authModal">
+          <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+        </button>
       </div>
-      <div class="modal-body">
-        
-        <ul class="nav nav-tabs" id="authTabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">
-              <i class="fas fa-sign-in-alt"></i> Iniciar sesión
-            </a>
-          </li>
-          <li class="nav-item" role="presentation">
-            <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">
-              <i class="fas fa-user-plus"></i> Registrarse
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" id="authTabsContent">
-          
-          <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-            <form id="loginForm">
-              <div class="mb-3">
-                <label for="loginEmail" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="loginEmail" placeholder="Ingresa tu correo" required>
-              </div>
-              <div class="mb-3">
-                <label for="loginPassword" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="loginPassword" placeholder="Ingresa tu contraseña" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-            </form>
-          </div>
 
-          
-          <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-            <form id="registerForm">
-              <div class="mb-3">
-                <label for="registerName" class="form-label">Nombre Completo</label>
-                <input type="text" class="form-control" id="registerName" placeholder="Ingresa tu nombre completo" required>
-              </div>
-              <div class="mb-3">
-                <label for="registerEmail" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="registerEmail" placeholder="Ingresa tu correo" required>
-              </div>
-              <div class="mb-3">
-                <label for="registerPassword" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="registerPassword" placeholder="Crea una contraseña" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-            </form>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="#productos">Productos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#redes-sociales">Redes Sociales</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Contáctanos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ubicacion">Ubicación</a></li>
+          <!-- Panel de administración (visible solo para administradores) -->
+          <li class="nav-item" id="adminPanelLink"><a class="nav-link" href="ad.html">Panel de administración</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal de autenticación -->
+  <div class="modal fade" id="authModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Iniciar sesión o Registrarse</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="authTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login" role="tab">
+                <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+              </a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register" role="tab">
+                <i class="fas fa-user-plus"></i> Registrarse
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content mt-3">
+            <!-- Formulario de inicio de sesión -->
+            <div class="tab-pane fade show active" id="login" role="tabpanel">
+              <form id="loginForm">
+                <div class="mb-3">
+                  <input type="email" name="email" class="form-control" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="mb-3">
+                  <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+              </form>
+            </div>
+            <!-- Formulario de registro -->
+            <div class="tab-pane fade" id="register" role="tabpanel">
+              <form id="registerForm">
+                <div class="mb-3">
+                  <input type="text" name="name" class="form-control" placeholder="Nombre Completo" required>
+                </div>
+                <div class="mb-3">
+                  <input type="email" name="email" class="form-control" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="mb-3">
+                  <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+              </form>
+            </div>
           </div>
-          
         </div>
       </div>
-      <div class="modal-footer">
-        <p>¿Ya tienes cuenta? <a href="#login" data-bs-toggle="tab" data-bs-target="#login" role="tab" aria-controls="login">Inicia sesión</a></p>
-        <p>¿No tienes cuenta? <a href="#register" data-bs-toggle="tab" data-bs-target="#register" role="tab" aria-controls="register">Regístrate</a></p>
+    </div>
+  </div>
+
+  <!-- Modal del carrito -->
+  <div class="modal fade" id="carritoModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carrito de Compras</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group" id="listaCarrito"></ul>
+          <p class="mt-3"><strong>Total:</strong> $<span id="totalCarrito">0.00</span></p>
+          <div id="paypal-button-container"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-
-<script>
-  
-  document.getElementById("loginForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-    
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.mensaje) {
-        alert(data.mensaje);
-        window.location.href = '/'; 
-      }
-    })
-    .catch(error => {
-      console.error('Error al iniciar sesión:', error);
-      alert('Error al iniciar sesión');
-    });
-  });
-
-  
-  app.post('/register', (req, res) => {
-  const { name, email, password, rol = 0 } = req.body;
-
-  if (!name || !email || !password) {
-    return res.status(400).json({ mensaje: 'Todos los campos son obligatorios' });
-  }
-
-  const query = 'INSERT INTO usuarios (name, email, password, rol) VALUES (?, ?, ?, ?)';
-  db.query(query, [name, email, password, rol], (err) => {
-    if (err) {
-      console.error('Error al registrar el usuario:', err);
-      if (err.code === 'ER_DUP_ENTRY') {
-        return res.status(400).json({ mensaje: 'El correo ya está registrado' });
-      } else {
-        return res.status(500).json({ mensaje: 'Error al registrar el usuario' });
-      }
-    }
-    res.status(201).json({ mensaje: 'Usuario registrado exitosamente' });
-  });
-});
-
-</script>
-
-
- 
-<div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="carritoModalLabel">Carrito de Compras</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-group" id="listaCarrito"></ul>
-        <p class="mt-3"><strong>Total:</strong> $<span id="totalCarrito">0.00</span></p>
-        
-        <div id="paypal-button-container"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-  
+  <!-- Sección de Inicio (Hero) -->
   <section class="hero" id="inicio">
     <div class="container text-center">
       <h1>Bienvenido a Nuestra Web</h1>
       <p>Explora nuestros productos y conoce más sobre nosotros.</p>
-      <a href="#productos" class="btn btn-ver-productos">Ver Productos</a>
+      <a href="#productos" class="btn btn-primary">Ver Productos</a>
     </div>
   </section>
 
-<section class="section bg-light" id="nosotros">
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card bg-light shadow-sm">
-          <div class="card-body p-4">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-lg-6 col-md-12">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToGMYg66Z2EcBgDuwi9RZ3SkLz-vc3jHdAFQ&s" class="img-fluid" alt="Imagen nosotros" style="height: 300px;">
-                </div>
-                <div class="col-lg-6 col-md-12">
-                  <h2 class="text-center">Nosotros</h2>
-                  <p class="text-justify">Comprometidos con la calidad y el servicio al cliente. Nuestra misión es proporcionar productos y servicios de alta calidad que satisfagan las necesidades de nuestros clientes.</p>
-                  <p class="text-justify">Nuestra visión es ser líderes en el mercado, ofreciendo soluciones innovadoras y personalizadas que superen las expectativas de nuestros clientes.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-   
-  
-  <section id="productos" class="container py-5">
-  <h2 class="text-center mb-5">Nuestros Productos</h2>
-  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      
-  
-      
-      <div class="carousel-item active">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="corazon.webp" class="d-block w-100" alt="Producto 1">
-              <div class="card-body text-center">
-                <h5 class="card-title">Corazon Diamante</h5>
-                <p class="card-text">$99.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Corazon Diamante', 99.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="negro.phg.jpeg" class="d-block w-100" alt="Producto 2">
-              <div class="card-body text-center">
-                <h5 class="card-title">Diamante Negro</h5>
-                <p class="card-text">$199.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Diamante Negro', 199.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema3.webp" class="d-block w-100" alt="Producto 3">
-              <div class="card-body text-center">
-                <h5 class="card-title">Anillos Rosa</h5>
-                <p class="card-text">$9.50</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Anillos Rosa', 9.50)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema4.jpeg" class="d-block w-100" alt="Producto 4">
-              <div class="card-body text-center">
-                <h5 class="card-title">Anillos Dorados</h5>
-                <p class="card-text">$49.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Anillos Dorados', 49.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema5.jpeg" class="d-block w-100" alt="Producto 5">
-              <div class="card-body text-center">
-                <h5 class="card-title">Anillo Esmeralda</h5>
-                <p class="card-text">$79.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Anillo Esmeralda', 79.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema6.jpeg" class="d-block w-100" alt="Producto 6">
-              <div class="card-body text-center">
-                <h5 class="card-title">Anillo Esmeralda Pasion</h5>
-                <p class="card-text">$129.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Anillo Esmeralda Pasion', 129.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema8.jpeg" class="d-block w-100" alt="Producto 7">
-              <div class="card-body text-center">
-                <h5 class="card-title">Cadenas Amor</h5>
-                <p class="card-text">$189.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Cadenas Amor', 189.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema9.jpeg" class="d-block w-100" alt="Producto 8">
-              <div class="card-body text-center">
-                <h5 class="card-title">Anillos Diamante</h5>
-                <p class="card-text">$249.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Anillos Diamante', 249.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="carousel-item">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="gema10.jpeg" class="d-block w-100" alt="Producto 9">
-              <div class="card-body text-center">
-                <h5 class="card-title">Cadenas de Oro</h5>
-                <p class="card-text">$399.99</p>
-                <button class="btn btn-gold" onclick="agregarAlCarrito('Cadenas de Oro', 399.99)">Comprar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
-
-
-        
-        
-  <section class="py-5 bg-light" id="redes-sociales">
-    <div class="container text-center">
-      <h2>Síguenos en nuestras redes sociales</h2>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="https://facebook.com" class="btn" style="background-color: pink; color: black;">Facebook</a></li>
-        <li class="list-inline-item"><a href="https://instagram.com" class="btn" style="background-color: pink; color: black;">Instagram</a></li>
-        <li class="list-inline-item"><a href="https://twitter.com" class="btn" style="background-color: pink; color: black;">Twitter</a></li>
-      </ul>
-    </div>
-  </section>
-
-  
-  <section class="section bg-light" id="contacto">
+  <!-- Sección Nosotros -->
+  <section class="bg-light py-5" id="nosotros">
     <div class="container">
-      <h2 class="text-center">Contáctanos</h2>
-      <p class="text-center">Si tienes alguna pregunta, no dudes en contactarnos a través del siguiente formulario:</p>
-      <form class="text-center">
-        <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre" required>
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToGMYg66Z2EcBgDuwi9RZ3SkLz-vc3jHdAFQ&s" class="img-fluid" alt="Nosotros">
         </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Correo Electrónico</label>
-          <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo" required>
+        <div class="col-lg-6">
+          <h2>Nosotros</h2>
+          <p>Comprometidos con la calidad y el servicio al cliente. Nuestra misión es proporcionar productos y servicios de alta calidad que satisfagan las necesidades de nuestros clientes.</p>
+          <p>Nuestra visión es ser líderes en el mercado, ofreciendo soluciones innovadoras y personalizadas que superen las expectativas de nuestros clientes.</p>
         </div>
-        <div class="mb-3">
-          <label for="mensaje" class="form-label">Mensaje</label>
-          <textarea class="form-control" id="mensaje" rows="3" placeholder="Ingresa tu mensaje" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-gold">Enviar Mensaje</button>
-      </form>
-    </div>
-  </section>
-  
-  <section class="section" id="ubicacion">
-    <div class="container text-center">
-      <h2>Ubicación</h2>
-      <p>Encuentra nuestra tienda aquí:</p>
-      <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509912!2d144.9537363153129!3d-37.81720997975149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f0d4b5f%3A0x5045675218ceed30!2sYour%20Store%20Name!5e0!3m2!1sen!2sus!4v1614164894110" 
-        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
       </div>
     </div>
   </section>
-  
-  <footer class="footer mt-auto py-3 bg-dark">
-    <div class="container text-center">
-      <span class="text-light">©️ 2024 Tu Empresa. Todos los derechos reservados.</span>
+
+  <!-- Sección de Productos -->
+  <section id="productos" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Nuestros Productos</h2>
+      <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <!-- Los items del carrusel se generarán dinámicamente con CargarProductos.js -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
     </div>
+  </section>
+
+  <!-- Sección Redes Sociales -->
+  <section class="bg-light py-5" id="redes-sociales">
+    <div class="container text-center">
+      <h2>Síguenos en redes sociales</h2>
+      <div class="mt-4">
+        <a href="https://facebook.com" class="btn btn-outline-dark mx-2">Facebook</a>
+        <a href="https://instagram.com" class="btn btn-outline-dark mx-2">Instagram</a>
+        <a href="https://twitter.com" class="btn btn-outline-dark mx-2">Twitter</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Contáctanos -->
+  <section class="py-5" id="contacto">
+    <div class="container">
+      <h2 class="text-center mb-4">Contáctanos</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form>
+            <input type="text" class="form-control mb-3" placeholder="Nombre" required>
+            <input type="email" class="form-control mb-3" placeholder="Correo Electrónico" required>
+            <textarea class="form-control mb-3" rows="3" placeholder="Mensaje" required></textarea>
+            <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Ubicación -->
+  <section id="ubicacion" class="py-5 bg-light">
+    <div class="container text-center">
+      <h2 class="mb-4">Ubicación</h2>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509912!2d144.9537363153129!3d-37.81720997975149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f0d4b5f%3A0x5045675218ceed30!2sYour%20Store%20Name!5e0!3m2!1sen!2sus!4v1614164894110" 
+              width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-3 text-center">
+    <p class="m-0">© 2024 Tu Empresa. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <script src="https://www.paypal.com/sdk/js?client-id=Ab05paPMOpGBhdFTJZJxKS6fz3iBfVlN4cCrsGnYGysztibzyBQuH9JKAEQp9Yi6uq3yxz6xn-IY3jnv&currency=USD"></script> 
-
+  <script src="https://www.paypal.com/sdk/js?client-id=Ab05paPMOpGBhdFTJZJxKS6fz3iBfVlN4cCrsGnYGysztibzyBQuH9JKAEQp9Yi6uq3yxz6xn-IY3jnv&currency=USD"></script>
+  <!-- Script para cargar los productos desde la DB -->
+  <script src="componentejs/CargarProductos.js"></script>
   <script>
-    
+    // Variables de estado de sesión
+    let isLoggedIn = false;
+    let currentUser = null; // Ejemplo: { name: 'Nombre', email: 'correo', rol: 0 o 1 }
+
+    // Verificar si hay sesión almacenada en localStorage al cargar la página
+    if(localStorage.getItem('currentUser')) {
+      currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      isLoggedIn = true;
+      actualizarUI();
+    }
+
+    // Actualiza la interfaz según el estado de sesión
+    function actualizarUI() {
+      const loginBtnContainer = document.getElementById('loginBtn');
+      const adminPanelLink = document.getElementById('adminPanelLink');
+      const carritoBtn = document.getElementById('carritoBtn');
+
+      if (isLoggedIn) {
+        // Muestra el dropdown con la imagen de perfil y además un saludo con el nombre del usuario
+        loginBtnContainer.innerHTML = `
+          <div class="dropdown d-inline-block">
+            <button class="btn btn-link text-white dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://cdn-icons-png.flaticon.com/512/12388/12388178.png" alt="Perfil" style="width:30px; height:30px; border-radius:50%;">
+            </button>
+            <span class="text-white ms-2">Hola, ${currentUser.name}</span>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
+            </ul>
+          </div>
+        `;
+        // Listener para cerrar sesión
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+          e.preventDefault();
+          logout();
+        });
+        carritoBtn.classList.remove('d-none');
+        adminPanelLink.style.display = (currentUser.rol === 1) ? 'block' : 'none';
+      } else {
+        loginBtnContainer.innerHTML = `
+          <button class="btn btn-link text-white" data-bs-toggle="modal" data-bs-target="#authModal">
+            <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+          </button>
+        `;
+        carritoBtn.classList.add('d-none');
+        adminPanelLink.style.display = 'none';
+      }
+    }
+
+    // Función para cerrar sesión y limpiar el localStorage
+    function logout() {
+      isLoggedIn = false;
+      currentUser = null;
+      localStorage.removeItem('currentUser');
+      actualizarUI();
+    }
+
+    // Previene el acceso al carrito sin iniciar sesión
+    document.getElementById('carritoBtn').addEventListener('click', function(e) {
+      if (!isLoggedIn) {
+        e.preventDefault();
+        alert('Inicie sesión para comprar');
+      }
+    });
+
+    // Manejo del formulario de inicio de sesión
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        email: this.email.value,
+        password: this.password.value
+      };
+
+      fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Credenciales incorrectas');
+        return res.json();
+      })
+      .then(data => {
+        // data.usuario viene del backend
+        isLoggedIn = true;
+        currentUser = data.usuario;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        actualizarUI();
+        // Cierra el modal de autenticación
+        const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
+        authModal.hide();
+      })
+      .catch(err => alert(err.message));
+    });
+
+    // Manejo del formulario de registro
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        name: this.name.value,
+        email: this.email.value,
+        password: this.password.value
+      };
+
+      fetch('/usuarios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      .then(res => {
+        if (!res.ok) return res.text().then(text => { throw new Error(text); });
+        return res.json();
+      })
+      .then(data => {
+        isLoggedIn = true;
+        // Suponiendo que el usuario registrado es de rol 0
+        currentUser = { name: formData.name, email: formData.email, rol: 0 };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        actualizarUI();
+        const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
+        authModal.hide();
+      })
+      .catch(err => {
+        if(err.message.includes("El correo ya está registrado")) {
+          alert("Ese usuario ya existe");
+        } else {
+          alert(err.message);
+        }
+      });
+    });
+
+    // Reinicia los formularios de login y registro al cerrar el modal
+    document.getElementById('authModal').addEventListener('hidden.bs.modal', function () {
+      document.getElementById('loginForm').reset();
+      document.getElementById('registerForm').reset();
+    });
+
+    // Funciones para el carrito
     const carrito = [];
     const carritoCantidad = document.getElementById('carritoCantidad');
     const listaCarrito = document.getElementById('listaCarrito');
     const totalCarrito = document.getElementById('totalCarrito');
-  
+
     function agregarAlCarrito(nombre, precio) {
+      if (!isLoggedIn) {
+        alert('Inicie sesión para comprar');
+        return;
+      }
       carrito.push({ nombre, precio });
       actualizarCarrito();
     }
-  
+
     function actualizarCarrito() {
       carritoCantidad.textContent = carrito.length;
       listaCarrito.innerHTML = '';
-      let total = 0;
-  
+      const total = carrito.reduce((sum, item) => sum + item.precio, 0);
+
       carrito.forEach((producto, index) => {
-        total += producto.precio;
         const item = document.createElement('li');
         item.className = 'list-group-item d-flex justify-content-between align-items-center';
         item.innerHTML = `
@@ -484,45 +376,47 @@
         `;
         listaCarrito.appendChild(item);
       });
-  
+
       totalCarrito.textContent = total.toFixed(2);
       renderizarBotonPayPal(total);
     }
-  
+
     function eliminarDelCarrito(index) {
       carrito.splice(index, 1);
       actualizarCarrito();
     }
-  
+
     function renderizarBotonPayPal(total) {
-      
       const contenedor = document.getElementById('paypal-button-container');
       contenedor.innerHTML = '';
-  
-      if (total === 0) return; 
-  
+      if (total === 0 || !isLoggedIn) return;
+
       paypal.Buttons({
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: { value: total.toFixed(2) }
-            }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            alert('Compra realizada con éxito. Gracias por tu compra, ' + (details.payer.name.given_name || 'Usuario'));
-            carrito.length = 0; 
-            actualizarCarrito();
-          });
-        },
-        onError: function(err) {
+        createOrder: (data, actions) => actions.order.create({
+          purchase_units: [{
+            amount: { value: total.toFixed(2) }
+          }]
+        }),
+        onApprove: (data, actions) => actions.order.capture().then(details => {
+          alert('Compra realizada con éxito. Gracias por tu compra, ' + (details.payer.name.given_name || 'Usuario'));
+          carrito.length = 0;
+          actualizarCarrito();
+        }),
+        onError: err => {
           console.error('Error en el proceso de pago', err);
           alert('Hubo un error en el proceso de pago. Inténtalo nuevamente.');
         }
-      }).render('#paypal-button-container'); 
+      }).render('#paypal-button-container');
     }
-  </script>
 
+    // Cierra el navbar en dispositivos móviles al hacer clic en un enlace
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        const navbarCollapse = document.getElementById('navbarNav');
+        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+        if (bsCollapse) bsCollapse.hide();
+      });
+    });
+  </script>
 </body>
 </html>
