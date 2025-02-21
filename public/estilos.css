@@ -1,390 +1,364 @@
 body {
-    font-family: 'Roboto', sans-serif; 
-    background-color: #f4f4f4; 
-    color: #333; 
-    padding-top: 60px; 
-  }
-  
-  .hero {
-    background-image: url('https://www.bodasesor.com/cdn/shop/files/01_5_157793-163376704345099.webp?v=1692004513&width=960'); /* Reemplaza con una imagen similar a Nike */
-    background-size: cover;
-    background-position: center;
-    height: 80vh; 
-    color: blanchedalmond;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-   text-transform: uppercase; 
-  letter-spacing: 1px; 
-  
-  }
-  
-  .hero h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    color:black;
-    text-shadow: 2px 2px 10px white;
-  }
-  
-  .hero p {
-    font-size: 20px;
-    color:rgba(000, 000, 000, 1);
-    text-shadow: 2px 2px 10px white;
-  }
-  
-  .navbar {
-    background-color: black; 
-  }
-  
-  .navbar .nav-link {
-    color: whitesmoke; 
-    background-color: transparent; 
-    border: 2px solid #008B8B; 
-    border-radius: 25px; 
-    margin: 0 10px; 
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .navbar .nav-link:hover {
-    background-color: pink; 
-    color: black; 
-  }
-  
-  .btn-ver-productos {
-    background-color: whitesmoke !important;
-    color: palevioletred;
-    border: 20px solid black;
-    border-radius: 25px;
-    padding: 15px 30px;
-    font-weight: bold;
-    font-size:18px !important;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  padding-top: 60px;
+}
 
-    text-transform: uppercase;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .catalogo-productos .card {
-    border: none;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .catalogo-productos .card:hover {
-    transform: scale(1.05);
-  }
-  
-  .catalogo-productos .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .catalogo-productos .btn-gold {
-    background-color: palevioletred;
-    color: black;
-    border: 2px solid black;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 12px 25px;
-    border-radius: 25px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .catalogo-productos .btn-gold:hover {
-    background-color: black;
-    color: white;
-  }
-  
-  .footer {
-    background-color: #222; 
-    color: white;
-    padding: 40px 0;
-    text-align: center;
-  }
-  
-  .footer a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  .footer a:hover {
-    color: #ff5f00; 
-  }
-  
-  .map-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-  }
-  
-  .map-container iframe {
-    width: 100%;
-    max-width: 700px;
-    height: 400px;
-    border: 0;
-  }
-  
-  .navbar .navbar-toggler-icon {
-    background-color: white;
-  }
-  
-  .navbar .navbar-toggler {
-    border-color: white; 
-  }
-  
-  .navbar .btn-warning {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-    font-weight: bold;
-  }
-  
-  .navbar .btn-warning:hover {
-    background-color: white;
-    color: black;
-  }
-  
-  .catalogo-productos .catalogo-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
-  .catalogo-productos .catalogo-item img {
-    width: 100%;
-    border-radius: 10px;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .catalogo-productos .catalogo-item img:hover {
-    transform: scale(1.05);
-  }
-  
-  
-  .btn-gold {
-    background-color: palevioletred;
-    color: palevioletred;
-    border: none;
-    font-weight: bold;
-  }
-  
-  .btn-gold:hover {
-    background-color: palevioletred;
-  }
-  
-  #contacto {
+.hero {
+  background-image: url('https://www.bodasesor.com/cdn/shop/files/01_5_157793-163376704345099.webp?v=1692004513&width=960');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: black;
+  text-shadow: 2px 2px 10px white;
+}
+
+.hero p {
+  font-size: 20px;
+  color: rgba(000, 000, 000, 1);
+  text-shadow: 2px 2px 10px white;
+}
+
+.navbar {
+  background-color: black;
+}
+
+.navbar .nav-link {
+  color: whitesmoke;
+  background-color: transparent;
+  border: 2px solid #008B8B;
+  border-radius: 25px;
+  margin: 0 10px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+  min-width: 100px; /* Ancho fijo de 100px */
+  text-align: center; /* Centrar el texto */
+  white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+  /*overflow: hidden; /* Ocultar el contenido que exceda el ancho */
+  text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es demasiado largo */
+  font-size: 16px;
+}
+
+.navbar .nav-link:hover {
+  background-color: pink;
+  color: black;
+}
+
+.btn-ver-productos {
+  background-color: whitesmoke !important;
+  color: palevioletred;
+  border: 20px solid black;
+  border-radius: 25px;
+  padding: 15px 30px;
+  font-weight: bold;
+  font-size: 18px !important;
+  text-transform: uppercase;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.catalogo-productos .card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.catalogo-productos .card:hover {
+  transform: scale(1.05);
+}
+
+.catalogo-productos .card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.catalogo-productos .btn-gold {
+  background-color: palevioletred;
+  color: black;
+  border: 2px solid black;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 12px 25px;
+  border-radius: 25px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.catalogo-productos .btn-gold:hover {
+  background-color: black;
+  color: black;
+  border: 2px solid palevioletred;
+}
+
+.footer {
+  background-color: #222;
+  color: white;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  color: #ff5f00;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.map-container iframe {
+  width: 100%;
+  max-width: 700px;
+  height: 400px;
+  border: 0;
+}
+
+.navbar .navbar-toggler-icon {
+  background-color: white;
+}
+
+.navbar .navbar-toggler {
+  border-color: white;
+}
+
+.navbar .btn-warning {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  font-weight: bold;
+}
+
+.navbar .btn-warning:hover {
+  background-color: white;
+  color: black;
+}
+
+.catalogo-productos .catalogo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.catalogo-productos .catalogo-item img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.catalogo-productos .catalogo-item img:hover {
+  transform: scale(1.05);
+}
+
+#contacto {
   background-color: #f8f9fa;
   padding: 60px 0;
-  }
-  
-  #contacto .container {
+}
+
+#contacto .container {
   max-width: 800px;
   margin: 0 auto;
-  }
-  
-  #contacto h2 {
+}
+
+#contacto h2 {
   font-size: 2.5rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 30px;
-  }
-  
-  #contacto p {
+}
+
+#contacto p {
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 40px;
-  }
-  
-  #contacto .form-label {
+}
+
+#contacto .form-label {
   font-size: 1rem;
   font-weight: 600;
   color: #333;
-  }
-  
-  #contacto .form-control {
+}
+
+#contacto .form-control {
   border-radius: 10px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
   margin-bottom: 20px;
   font-size: 1rem;
-  }
-  
-  #contacto .form-control:focus {
+}
+
+#contacto .form-control:focus {
   border-color: #0069d9;
   box-shadow: 0 0 8px rgba(0, 105, 217, 0.5);
-  }
-  
-  #contacto .btn-gold {
+}
+
+#contacto .btn-gold {
   background-color: palevioletred;
-  color: #fff;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  padding: 12px 30px;
+  color: black;
+  border: 2px solid black;
+  font-weight: bold;
   text-transform: uppercase;
-  border: none;
-  transition: background-color 0.3s ease;
-  }
-  
-  #contacto .btn-gold:hover {
-  background-color: #ffcc00;
-  }
-  
-  #contacto .btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-  }
-  
-  #contacto .text-center {
-  margin-top: 20px;
-  }
-  
-  #contacto .text-center a {
-  color: #0069d9;
-  text-decoration: none;
-  }
-  
-  #contacto .text-center a:hover {
-  text-decoration: underline;
-  }
-  
-  #ubicacion {
+  padding: 12px 25px;
+  border-radius: 25px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#contacto .btn-gold:hover {
+  background-color: black;
+  color: black;
+  border: 2px solid palevioletred;
+}
+
+#ubicacion {
   background-color: #f9f9f9;
   padding: 50px 0;
   text-align: center;
-  }
-  
-  #ubicacion h2 {
+}
+
+#ubicacion h2 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
-  }
-  
-  #ubicacion p {
+}
+
+#ubicacion p {
   font-size: 1.2rem;
   color: #555;
   margin-bottom: 30px;
-  }
-  
-  .map-container iframe {
+}
+
+.map-container iframe {
   border: 0;
   width: 100%;
   height: 350px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  @media (max-width: 768px) {
+}
+
+@media (max-width: 768px) {
   .map-container iframe {
-    height: 250px;
+      height: 250px;
   }
-  }
-  
-  #redes-sociales {
+}
+
+#redes-sociales {
   background-color: #e9ecef;
   padding: 50px 0;
   text-align: center;
-  }
-  
-  #redes-sociales h2 {
+}
+
+#redes-sociales h2 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
-  }
-  
-  #redes-sociales .list-inline-item {
+}
+
+#redes-sociales .list-inline-item {
   margin: 0 15px;
-  }
-  
-  #redes-sociales .btn {
+}
+
+#redes-sociales .btn {
   padding: 12px 25px;
   font-size: 1.2rem;
   border-radius: 50px;
   transition: background-color 0.3s ease;
-  }
-  
-  #redes-sociales .btn:hover {
-  background-color: #ff77a9; 
+}
+
+#redes-sociales .btn:hover {
+  background-color: #ff77a9;
   color: white;
   text-decoration: none;
-  }
-  
-  #redes-sociales .btn:focus {
+}
+
+#redes-sociales .btn:focus {
   box-shadow: none;
-  }
-  
-  
-  .container {
+}
+
+.container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
-  }
-  
-  #productosCarrusel .carousel-item {
-    padding: 30px 0; 
-  }
-  
-  #productosCarrusel .carousel-inner {
-    display: flex;
-    align-items: center;
-  }
-  
-  #productosCarrusel .card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  #productosCarrusel .card img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover; 
-    border-radius: 10px;
-  }
-  
-  #productosCarrusel .card-body {
-    padding: 15px;
-  }
-  
-  #productosCarrusel .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  #productosCarrusel .card-text {
-    font-size: 1.1rem;
-    color: #333;
-  }
-  
-  #productosCarrusel .btn-gold {
-    background-color: palevioletred;
-    color: black;
-    border: 2px solid black;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 12px 25px;
-    border-radius: 25px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  #productosCarrusel .btn-gold:hover {
-    background-color: black;
-    color: pink;
-  }
-  
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-color: black;
-  }
-  button .btn .btn-gold:hover{
-    background-color: green;
-  }
+}
+
+#productosCarrusel .carousel-item {
+  padding: 30px 0;
+}
+
+#productosCarrusel .carousel-inner {
+  display: flex;
+  align-items: center;
+}
+
+#productosCarrusel .card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#productosCarrusel .card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#productosCarrusel .card-body {
+  padding: 15px;
+}
+
+#productosCarrusel .card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#productosCarrusel .card-text {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+#productosCarrusel .btn-gold {
+  background-color: palevioletred;
+  color: black;
+  border: 2px solid black;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 12px 25px;
+  border-radius: 25px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#productosCarrusel .btn-gold:hover {
+  background-color: black;
+  color: black;
+  border: 2px solid palevioletred;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: black;
+}
